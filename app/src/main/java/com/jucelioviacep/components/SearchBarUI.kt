@@ -1,24 +1,27 @@
 package com.jucelioviacep.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import java.time.temporal.TemporalQuery
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,9 +53,14 @@ fun SearchBarUI(
         trailingIcon = {
             Icon(imageVector = Icons.Default.Close,
                 contentDescription = null,
+                modifier = Modifier
+                    .clickable {
+                        onQueryChange("")
+                    },
                 tint = Color.Gray
             )
         },
+        shape = RoundedCornerShape(16.dp),
 
     ) {}
 }
@@ -60,7 +68,7 @@ fun SearchBarUI(
 @Preview(showBackground = true)
 @Composable
 private fun SearchBarUIPreview(){
-    val query by remember{
+    var query by remember{
         mutableStateOf("")
     }
     Column(
@@ -72,7 +80,7 @@ private fun SearchBarUIPreview(){
             query = query,
             placeholder = "Ex Avenida Paulista",
                onQueryChange = {
-
+                   query = it
             }
 
         )
